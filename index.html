@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word Guess Game</title>
+</head>
+<body>
+
+    <h1>Word Guess Game - CrossFit Edition</h1>
+    <p>Press any key to get started!</p>
+
+    <div>
+        <div><p id=directions-text></p></div>
+        <div><p id=wins-text></p></div>
+        <div><p id="display-text"></p></div>
+        <div><p id="guessesleft-text"></p></div>
+        <div><p id="guessedletters-text"></p></div>
+    </div>
+
+<script>
+
+// computer's random choice of word
+var computerChoices = [
+    "thruster",
+    "clean",
+    "squat",
+    "barbell",
+    "amrap",
+    "emom",
+    "burpee",
+    "chipper",
+    "kipping",
+    "pistol",
+    "tabata",
+    "wallball",
+    "pullup",
+    "pushup",
+    "mattfrasier",
+    "doubleunder",
+    "murphey",
+    "snatch",
+    "deadlift",
+    "fightgonebad",
+    "kettlebell",
+
+];
+
+var wins=0;
+var losses=0;
+var guesses=12;
+
+// Creating an empty array for guessed letters
+var computerPickArray = [];
+var userGuessArray = [];
+
+// Create variables that hold references to the places in the HTML where we want to display things.
+//edit for this file    
+    var directionsText = document.getElementById("directions-text");
+    var winsText = document.getElementById("wins-text");
+    var displayText = document.getElementById("display-text");
+    var guessesleftText = document.getElementById("guessesleft-text");
+    var guessedlettersText = document.getElementById("guessedletters-text");
+
+
+    directionsText.textContent = "Guess the word!";
+    winsText.textContent = "wins: " + wins;
+    guessesleftText.textContent = "guesses left: " + guesses;
+    guessedlettersText.textContent = "Your guesses so far:" + userGuessArray;
+
+
+function reset () {
+    guesses=12;
+    userGuessArray = [];
+    computerPickArray = [];
+    computerSubArray = [];
+    wordGuess();
+}
+
+
+//"type any key to start", when a key is pressed, runs wordGuess to pick a word
+document.addEventListener("keyup", wordGuess()); 
+            
+
+function wordGuess() {
+// Randomly chooses a choice from the options array. This is the Computer's guess.
+computerPick = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        console.log(computerPick);
+
+
+        // turn each letter of the word into separate variables of the array
+        var computerPickArray = [...computerPick];
+            console.log(computerPickArray);
+
+            // an array for adding underscores for each letter of computerPickArray
+            var computerSubArray = [];
+
+            // to add enough variables to SubArray to match the length of computerpickarray
+            for (i=0; i<computerPickArray.length; i++) {
+                j = "_ "
+                computerSubArray.push(j); 
+            }
+            console.log(computerSubArray);
+            displayText.textContent = computerSubArray.join("");
+
+
+
+
+
+// This function is run whenever the user presses a key.
+document.onkeyup = function(event) {
+
+// Determines which key was pressed.
+var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+    var viableChoice = /[a-z]/gi;
+    if (!viableChoice.test(userGuess)) {
+    alert("please enter a letter");
+    }
+    else {
+    console.log(userGuess);
+    }
+
+
+ 
+    if (userGuess === computerPickArray[0]) {
+           computerSubArray[0] = userGuess;
+           displayText.textContent = computerSubArray.join("");
+    }
+    if (userGuess === computerPickArray[1]) {
+           computerSubArray[1] = userGuess;
+           displayText.textContent = computerSubArray.join("");
+    }
+    if (userGuess === computerPickArray[2]) {
+           computerSubArray[2] = userGuess;
+           displayText.textContent = computerSubArray.join("");  
+    }
+    if (userGuess === computerPickArray[3]) {  
+           computerSubArray[3] = userGuess;
+           displayText.textContent = computerSubArray.join("");  
+    }
+    if (userGuess === computerPickArray[4]) {
+           computerSubArray[4] = userGuess;
+           displayText.textContent = computerSubArray.join("");
+    }
+    if (userGuess === computerPickArray[5]) {
+           computerSubArray[5] = userGuess;
+           displayText.textContent = computerSubArray.join("");
+    }
+    if (userGuess === computerPickArray[6]) { 
+           computerSubArray[6] = userGuess;
+           displayText.textContent = computerSubArray.join("");
+    }
+    if (userGuess === computerPickArray[7]) {
+           computerSubArray[7] = userGuess;
+           displayText.textContent = computerSubArray.join("");  
+    }
+    if (userGuess === computerPickArray[8]) { 
+           computerSubArray[8] = userGuess;
+           displayText.textContent = computerSubArray.join("");   
+    }
+    if (userGuess === computerPickArray[9]) {   
+           computerSubArray[9] = userGuess;
+           displayText.textContent = computerSubArray.join("");
+    }
+    if (userGuess === computerPickArray[10]) {
+           computerSubArray[10] = userGuess;
+           displayText.textContent = computerSubArray.join("");
+    }
+    if (userGuess === computerPickArray[11]) {
+           computerSubArray[11] = userGuess;
+           displayText.textContent = computerSubArray.join("");
+    }
+    if (userGuess === computerPickArray[12]) {
+           computerSubArray[12] = userGuess;
+           displayText.textContent = computerSubArray.join("");
+    }
+    
+
+   
+    
+
+    if  (guesses==0) {
+            losses++;
+            reset();
+            alert("Click ok to restart!");
+        }  
+        else if (userGuess != (computerPickArray[0]||computerPickArray[1]||computerPickArray[2]||computerPickArray[3]||computerPickArray[4]||computerPickArray[5]||computerPickArray[6]||computerPickArray[7]||computerPickArray[8]||computerPickArray[9]||computerPickArray[10]||computerPickArray[11]||computerPickArray[12])) {
+            guesses--;
+            console.log(guesses)
+            userGuessArray.push(userGuess);
+        }
+
+
+//two issues:
+//guesses decreases each letter input regardless of if it's a correct guess
+//can't figure out how to reset if the word is completed 
+    
+
+     
+        // wins++
+        // userGuessArray=[];
+        // computerSubArray=[];
+        // reset();
+
+
+// Display the user wins/losses/guesses.
+directionsText.textContent = "Guess the word!";
+winsText.textContent = "wins: " + wins;
+guessesleftText.textContent = "guesses left: " + guesses;
+guessedlettersText.textContent = "Your guesses so far:" + userGuessArray;
+
+}
+}
+
+
+</script>
+
+
+
+
+<!--
+
+// 2. Choose a theme for your game! In the demo, we picked an 80s theme: 80s questions, 80s sound and an 80s aesthetic. You can choose any subject for your theme, though, so be creative! 
+// 3. Use key events to listen for the letters that your players will type. 
+// 4. Display the following on the page: 
+// 5. Press any key to get started! 
+// 6. Wins: (# of times user guessed the word correctly).
+//     * If the word is madonna, display it like this when the game starts: _ _ _ _ _ _ _. 
+//     * As the user guesses the correct letters, reveal them: m a d o _ _ a. 
+// 7. Number of Guesses Remaining: (# of guesses remaining for the user). 
+// 8. Letters Already Guessed: (Letters the user has guessed, displayed like L Z Y H). 
+// 9. After the user wins/loses the game should automatically choose another word and make the user play it.
+
+// Word Guess Game Bonuses
+// 1. Play a sound or song when the user guesses their word correctly, like in our demo.
+// 2. Write some stylish CSS rules to make a design that fits your game's theme.
+// 3. HARD MODE: Organize your game code as an object, except for the key events to get the letter guessed. This will be a challenge if you haven't coded with JavaScript before, but we encourage anyone already familiar with the language to try this out.
+// 4. Save your whole game and its properties in an object.
+// 5. Save any of your game's functions as methods, and call them underneath your object declaration using event listeners.
+// 6. Don't forget to place your global variables and functions above your object.
+//     * Remember: global variables, then objects, then calls.
+// 7. Definitely talk with a TA or your instructor if you get tripped up during this challenge.
+
+-->
+    
+</body>
+</html>
+
+
+
+
+
+
+<!-- code from attempt #1 -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Word Guess Game</title>
+</head>
+<body>
+
+    <h1>Word Guess Game - CrossFit Edition</h1>
+    <p>Press any key to get started!</p>
+
+    <div>
+        <div><p id=directions-text></p></div>
+        <div><p id=wins-text></p></div>
+        <div><p id="display-text"></p></div>
+        <div><p id="guessesleft-text"></p></div>
+        <div><p id="guessedletters-text"></p></div>
+    </div>
+
+<script>
+
+// computer's random choice of word
+var computerChoices = [
+    "thruster",
+    "clean",
+    "squat",
+    "barbell",
+    "amrap",
+    "emom",
+    "burpee",
+    "chipper",
+    "kipping",
+    "pistol",
+    "tabata",
+    "wallball",
+    "pullup",
+    "pushup",
+    "mattfrasier",
+    "doubleunder",
+    "murphey",
+    "snatch",
+    "deadlift",
+    "fightgonebad",
+    "kettlebell",
+
+];
+
+var wins=0;
+var losses=0;
+var guesses=12;
+
+// Creating an empty array for guessed letters
+var computerPickArray = [];
+var userGuessArray = [];
+
+// Create variables that hold references to the places in the HTML where we want to display things.
+//edit for this file    
+    var directionsText = document.getElementById("directions-text");
+    var winsText = document.getElementById("wins-text");
+    var displayText = document.getElementById("display-text");
+    var guessesleftText = document.getElementById("guessesleft-text");
+    var guessedlettersText = document.getElementById("guessedletters-text");
+
+
+function wordGuess() {
+// Randomly chooses a choice from the options array. This is the Computer's guess.
+computerPick = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        console.log(computerPick);
+}
+
+//"type any key to start", when a key is pressed, runs wordGuess to pick a word
+document.addEventListener("keyup", wordGuess()); 
+            // turn each letter of the word into separate variables of the array
+            var computerPickArray = [...computerPick];
+            console.log(computerPickArray[0]);
+
+            //create object for displaying array
+
+            
+            var computerPickObject = {
+            }
+            
+            console.log(computerPickObject);
+
+            // to add enough object properties to match the length of computerpickarray
+            for (i=0; i<computerPickArray.length; i++) {
+                computerPickObject["arrayindex"] = [computerPickArray[i], "_"];
+            }
+            // console.log(computerPickObject[0].arrayindex[0]);
+            // console.log(computerPickObject[0].arrayindex[1]);
+
+
+
+/*
+
+so when they guess a correct letter, the reference would change from the value to the property to display
+
+//  ***** to display an object property value: computerPickObject.computerPickArray[i];
+
+
+also need to figure out how to compare the input to all the letters in 'computerpickarray' and replace when equal
+
+
+*/
+
+//this is just displaying computerpick to the page.....need to reference the index within the individual element arrays but don't have a consistent anchor for determining index of object
+for (i=0; i<computerPickArray; i++) {
+displayText.textContent = computerPickObject[i][arrayindex][1];
+
+}
+
+
+
+function reset () {
+    guesses=12;
+    userGuessArray = [];
+    wordGuess();
+}
+
+//need to display the array computerpickarray with _ for each letter
+
+
+
+
+
+
+
+
+
+// This function is run whenever the user presses a key.
+document.onkeyup = function(event) {
+
+// Determines which key was pressed.
+var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+
+    // var viableChoice = /[a-z]/gi;
+    // if (!viableChoice.test(userGuess)) {
+    // alert("please enter a letter");
+    // }
+    // else {
+    console.log(userGuess);
+    // }
+       
+        
+//loop through guesses until 0 or user = computer
+
+    if (userGuess === computerPick) {
+            wins++;
+            userGuess=null;
+            reset();
+        }
+    if (userGuess != computerPick) {
+            guesses--;
+            console.log(guesses)
+            userGuessArray.push(userGuess);
+        
+
+    if  (guesses==0){
+            losses++;
+            reset2();
+        }  
+}     
+
+// Display the user wins/losses/guesses.
+directionsText.textContent = "Guess the word!";
+winsText.textContent = "wins: " + wins;
+guessesleftText.textContent = "guesses left: " + guesses;
+guessedlettersText.textContent = "Your guesses so far:" + userGuessArray;
+
+}
+
+</script> -->
+
+
+
+
+<!--
+
+2. Choose a theme for your game! In the demo, we picked an 80s theme: 80s questions, 80s sound and an 80s aesthetic. You can choose any subject for your theme, though, so be creative! 
+3. Use key events to listen for the letters that your players will type. 
+4. Display the following on the page: 
+5. Press any key to get started! 
+6. Wins: (# of times user guessed the word correctly).
+    * If the word is madonna, display it like this when the game starts: _ _ _ _ _ _ _. 
+    * As the user guesses the correct letters, reveal them: m a d o _ _ a. 
+7. Number of Guesses Remaining: (# of guesses remaining for the user). 
+8. Letters Already Guessed: (Letters the user has guessed, displayed like L Z Y H). 
+9. After the user wins/loses the game should automatically choose another word and make the user play it.
+
+Word Guess Game Bonuses
+1. Play a sound or song when the user guesses their word correctly, like in our demo.
+2. Write some stylish CSS rules to make a design that fits your game's theme.
+3. HARD MODE: Organize your game code as an object, except for the key events to get the letter guessed. This will be a challenge if you haven't coded with JavaScript before, but we encourage anyone already familiar with the language to try this out.
+4. Save your whole game and its properties in an object.
+5. Save any of your game's functions as methods, and call them underneath your object declaration using event listeners.
+6. Don't forget to place your global variables and functions above your object.
+    * Remember: global variables, then objects, then calls.
+7. Definitely talk with a TA or your instructor if you get tripped up during this challenge.
+
+
+
+
+-->
+
+    
+<!-- </body>
+</html> -->
