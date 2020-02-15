@@ -38,6 +38,8 @@ var guesses=12;
 var computerPickArray = [];
 var userGuessArray = [];
 
+
+
 // Create variables that hold references to the places in the HTML where we want to display things.
 //edit for this file    
     var introDirectionsText = document.getElementById("introDirections-text");
@@ -106,9 +108,13 @@ var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
     console.log(userGuess);
     // }
 
+
 compareGuesstoWord(userGuess);
 
+
+
 function compareGuesstoWord(x) {
+
     var checkLetter = false;
     //if the generated computerpick is equal to the letter entered... then variable is true
     for (var i = 0; i < computerPickArray.length; i++) {
@@ -129,15 +135,12 @@ function compareGuesstoWord(x) {
             // if (computerSubArray.includes(x) === true) {
                 
             // }
-
-
-
+            
         }
     }
-    
+
 
     //otherwise, push the incorrect guess in the wrong guesses section, and reduce remaining guesses
- 
     else {
         userGuessArray.push(userGuess);
         guesses--;
@@ -160,7 +163,6 @@ if (computerPickArray.toString() == computerSubArray.toString()) {
 
 }
 }
-
 
 
  
