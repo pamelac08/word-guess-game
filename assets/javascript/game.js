@@ -1,8 +1,5 @@
 
 
-
-
-
 // computer's random choice of word
 var computerChoices = [
     "thruster",
@@ -54,7 +51,7 @@ var userGuessArray = [];
     directionsText.textContent = "Guess the word!";
     winsText.textContent = "wins: " + wins;
     guessesleftText.textContent = "guesses left: " + guesses;
-    guessedlettersText.textContent = "Your guesses so far:" + userGuessArray;
+    guessedlettersText.textContent = "Your guesses so far: " + userGuessArray.join(" ");
 
 
 function reset () {
@@ -100,13 +97,15 @@ document.onkeyup = function(event) {
 
 // Determines which key was pressed.
 var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-    // var viableChoice = /[a-z]/gi;
-    // if (!viableChoice.test(userGuess)) {
-    // alert("please enter a letter");
-    // }
-    // else {
+    var viableChoice = /[a-z]/gi;
+    if (!viableChoice.test(userGuess)) {
+    alert("please enter a letter");
+    console.log(userGuess)
+    return userGuess
+    }
+    else {
     console.log(userGuess);
-    // }
+    }
 
 
 compareGuesstoWord(userGuess);
@@ -127,7 +126,7 @@ function compareGuesstoWord(x) {
         //check each letter to see if it matches word
         for (var i = 0; i < computerPickArray.length; i++) {
 
-            if (computerPick[i] == x || userGuessArray == x) {
+            if (computerPick[i] == x ) {
                 computerSubArray[i] = x;
                 displayText.textContent = "Current Word: " + computerSubArray.join("");
             }
@@ -137,6 +136,10 @@ function compareGuesstoWord(x) {
             // }
             
         }
+    }
+    //check if letter has already been guessed
+    else if (userGuessArray.indexOf(x) !== -1){
+        alert("letter already guessed!")
     }
 
 
@@ -177,7 +180,7 @@ introDirectionsText.textContent = " ";
 directionsText.textContent = "Guess the word!";
 winsText.textContent = "wins: " + wins;
 guessesleftText.textContent = "guesses left: " + guesses;
-guessedlettersText.textContent = "Your guesses so far:" + userGuessArray;
+guessedlettersText.textContent = "Your guesses so far :" + userGuessArray.join(" ");
 
 }
 }
