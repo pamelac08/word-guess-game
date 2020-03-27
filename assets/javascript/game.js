@@ -27,9 +27,9 @@ var computerChoices = [
 
 ];
 
-var wins=0;
-var losses=0;
-var guesses=12;
+var wins = 0;
+var losses = 0;
+var guesses = 12;
 
 // Creating an empty array for guessed letters
 var computerPickArray = [];
@@ -39,23 +39,23 @@ var userGuessArray = [];
 
 // Create variables that hold references to the places in the HTML where we want to display things.
 //edit for this file    
-    var introDirectionsText = document.getElementById("introDirections-text");
-    var directionsText = document.getElementById("directions-text");
-    var winsText = document.getElementById("wins-text");
-    var displayText = document.getElementById("display-text");
-    var guessesleftText = document.getElementById("guessesleft-text");
-    var guessedlettersText = document.getElementById("guessedletters-text");
+var introDirectionsText = document.getElementById("introDirections-text");
+var directionsText = document.getElementById("directions-text");
+var winsText = document.getElementById("wins-text");
+var displayText = document.getElementById("display-text");
+var guessesleftText = document.getElementById("guessesleft-text");
+var guessedlettersText = document.getElementById("guessedletters-text");
 
 
-    introDirectionsText.textContent = "Press any key to get started!";
-    directionsText.textContent = "Guess the word!";
-    winsText.textContent = "wins: " + wins;
-    guessesleftText.textContent = "guesses left: " + guesses;
-    guessedlettersText.textContent = "Your guesses so far: " + userGuessArray.join(" ");
+introDirectionsText.textContent = "Press any key to get started!";
+directionsText.textContent = "Guess the word!";
+winsText.textContent = "wins: " + wins;
+guessesleftText.textContent = "guesses left: " + guesses;
+guessedlettersText.textContent = "Your guesses so far: " + userGuessArray.join(" ");
 
 
-function reset () {
-    guesses=12;
+function reset() {
+    guesses = 12;
     userGuessArray = [];
     computerPickArray = [];
     computerSubArray = [];
@@ -64,123 +64,123 @@ function reset () {
 
 
 //"type any key to start", when a key is pressed, runs wordGuess to pick a word
-document.addEventListener("keyup", wordGuess()); 
+document.addEventListener("keyup", wordGuess());
 
 
 function wordGuess() {
-// Randomly chooses a choice from the options array. This is the Computer's guess.
-computerPick = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-        console.log(computerPick);
-
- 
-
-        // turn each letter of the word into separate variables of the array
-        var computerPickArray = [...computerPick];
-            console.log(computerPickArray);
-
-            // an array for adding underscores for each letter of computerPickArray
-            var computerSubArray = [];
-
-            // to add enough variables to SubArray to match the length of computerpickarray
-            for (i=0; i<computerPickArray.length; i++) {
-                j = "_ "
-                computerSubArray.push(j); 
-            }
-            console.log(computerSubArray);
-            displayText.textContent = "Current Word: " + computerSubArray.join("");
+    // Randomly chooses a choice from the options array. This is the Computer's guess.
+    computerPick = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+    console.log(computerPick);
 
 
 
+    // turn each letter of the word into separate variables of the array
+    var computerPickArray = [...computerPick];
+    console.log(computerPickArray);
 
-// This function is run whenever the user presses a key.
-document.onkeyup = function(event) {
+    // an array for adding underscores for each letter of computerPickArray
+    var computerSubArray = [];
 
-// Determines which key was pressed.
-var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-    var viableChoice = /[a-z]/gi;
-    if (!viableChoice.test(userGuess)) {
-    alert("please enter a letter");
-    console.log(userGuess)
-    return userGuess
-    }
-    else {
-    console.log(userGuess);
-    }
-
-
-compareGuesstoWord(userGuess);
-
-
-
-function compareGuesstoWord(x) {
-
-    var checkLetter = false;
-    //if the generated computerpick is equal to the letter entered... then variable is true
-    for (var i = 0; i < computerPickArray.length; i++) {
-        if (computerPickArray[i] == x) {
-            checkLetter = true;
-        }
-    }
-    //if (false)
-    if (checkLetter) {
-        //check each letter to see if it matches word
-        for (var i = 0; i < computerPickArray.length; i++) {
-
-            if (computerPick[i] == x ) {
-                computerSubArray[i] = x;
-                displayText.textContent = "Current Word: " + computerSubArray.join("");
-            }
-            // //if an input has already been guessed and is not correct - do nothing
-            // if (computerSubArray.includes(x) === true) {
-                
-            // }
-            
-        }
-    }
-    //check if letter has already been guessed
-    else if (userGuessArray.indexOf(x) !== -1){
-        alert("letter already guessed!")
-    }
-
-
-    //otherwise, push the incorrect guess in the wrong guesses section, and reduce remaining guesses
-    else {
-        userGuessArray.push(userGuess);
-        guesses--;
-        
+    // to add enough variables to SubArray to match the length of computerpickarray
+    for (i = 0; i < computerPickArray.length; i++) {
+        j = "_ "
+        computerSubArray.push(j);
     }
     console.log(computerSubArray);
-
-    
-
-
-    if  (guesses==0) {
-            losses++;
-            reset();
-            alert("Click ok to restart!");
-        }  
-
-if (computerPickArray.toString() == computerSubArray.toString()) {
-        wins++;
-        reset()
-
-}
-}
+    displayText.textContent = "Current Word: " + computerSubArray.join("");
 
 
- 
-
-// Hide the directions
-introDirectionsText.textContent = " ";
-
-   
 
 
-// Display the user wins/losses/guesses.
-directionsText.textContent = "Guess the word!";
-winsText.textContent = "wins: " + wins;
-guessesleftText.textContent = "guesses left: " + guesses;
-guessedlettersText.textContent = "Your guesses so far :" + userGuessArray.join(" ");
+    // This function is run whenever the user presses a key.
+    document.onkeyup = function (event) {
 
-}
+        // Determines which key was pressed.
+        var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+        var viableChoice = /[a-z]/gi;
+        if (!viableChoice.test(userGuess)) {
+            alert("please enter a letter");
+            console.log(userGuess);
+            return;
+        }
+        else {
+            console.log(userGuess);
+        }
+
+
+        compareGuesstoWord(userGuess);
+
+
+
+        function compareGuesstoWord(x) {
+
+            var checkLetter = false;
+            //if the generated computerpick is equal to the letter entered... then variable is true
+            for (var i = 0; i < computerPickArray.length; i++) {
+                if (computerPickArray[i] == x) {
+                    checkLetter = true;
+                }
+            }
+            //if (false)
+            if (checkLetter) {
+                //check each letter to see if it matches word
+                for (var i = 0; i < computerPickArray.length; i++) {
+
+                    if (computerPick[i] == x) {
+                        computerSubArray[i] = x;
+                        displayText.textContent = "Current Word: " + computerSubArray.join("");
+                    }
+                    // //if an input has already been guessed and is not correct - do nothing
+                    // if (computerSubArray.includes(x) === true) {
+
+                    // }
+
+                }
+            }
+            //check if letter has already been guessed
+            else if (userGuessArray.indexOf(x) !== -1) {
+                alert("letter already guessed!")
+            }
+
+
+            //otherwise, push the incorrect guess in the wrong guesses section, and reduce remaining guesses
+            else {
+                userGuessArray.push(userGuess);
+                guesses--;
+
+            }
+            console.log(computerSubArray);
+
+
+
+
+            if (guesses == 0) {
+                losses++;
+                reset();
+                alert("Click ok to restart!");
+            }
+
+            if (computerPickArray.toString() == computerSubArray.toString()) {
+                wins++;
+                reset()
+
+            }
+        }
+
+
+
+
+        // Hide the directions
+        introDirectionsText.textContent = " ";
+
+
+
+
+        // Display the user wins/losses/guesses.
+        directionsText.textContent = "Guess the word!";
+        winsText.textContent = "wins: " + wins;
+        guessesleftText.textContent = "guesses left: " + guesses;
+        guessedlettersText.textContent = "Your guesses so far :" + userGuessArray.join(" ");
+
+    }
 }
